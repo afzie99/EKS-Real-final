@@ -1,0 +1,58 @@
+pipeline {
+    agent any
+    environment {
+        DOCKER_IMAGE = "afzie999/my-app:${GIT_COMMIT}"
+        DOCKER_CREDENTIALS = credentials('docker-hub-creds')
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git url: 'https://github.com/afzie99/EKS-Real.git', branch: 'main'
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t $DOCKER_IMAGE .'
+            }
+        }
+        stage('Push Docker Image') {
+            steps {
+                sh 'docker login -u $DOCKER_CREDENTIALS_USR -p $DOCKER_CREDENTIALS_PSW'
+                sh 'docker push $DOCKER_IMAGE'
+            }
+        }
+
+        stage('Update Helm values') {
+    steps {
+        checkout scm
+        script {
+            // 1. Update the values.yaml file
+            // NOTE: Check the indentation in your sed command; ' tag:' should likely be two spaces.
+            sh '''
+            sed -i "s|^ *tag:.*|  tag: ${GIT_COMMIT}|" helm/my-app-chart/values.yaml
+            '''
+            
+            // 2. Configure Git user
+            sh 'git config user.email "jenkins@example.com"'
+            sh 'git config user.name "jenkins"'
+            
+            // 3. Commit the change
+            sh 'git add helm/my-app-chart/values.yaml'
+            sh "git commit -m 'Update image tag to ${GIT_COMMIT}'"
+            
+            // 4. Authenticated Git Push (FIXED)
+            // Use 'Secret text' credential with your GitHub Personal Access Token (PAT)
+            withCredentials([
+                // Bind the credential ID to a variable named GH_TOKEN
+                string(credentialsId: 'GITHUB_PAT_TOKEN', variable: 'GH_TOKEN')
+            ]) {
+                // Now, use the token variable in the push URL for authentication
+                // Format: https://<token>@github.com/<repo>
+                sh "git push https://${GH_TOKEN}@github.com/afzie99/EKS-Real.git HEAD:main"
+            }
+        }
+    }
+}
+}
+        }
+    
