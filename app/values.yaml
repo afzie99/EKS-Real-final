@@ -1,0 +1,10 @@
+replicaCount: 2
+image:
+  repository: afzie999/my-app
+  tag: be4af52ecb27ab99a94769f3d050380b7760dbb1
+  pullPolicy: Always
+service:
+  type: NodePort
+  port: 80         # container port your app listens on
+  targetPort: 80   # container port mapping
+  nodePort: 31000  # external port you will hit
