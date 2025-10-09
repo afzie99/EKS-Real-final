@@ -7,4 +7,4 @@ service:
   type: NodePort
   port: 80         # container port your app listens on
   targetPort: 80   # container port mapping
-  nodePort: 31000  # external port you will hit
+  nodePort: 30080  # external port you will hit
