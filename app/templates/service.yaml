@@ -5,11 +5,11 @@ metadata:
   name: my-app 
 spec:
   # Hardcoded type
-  type: NodePort 
+  type: {{ .Values.service.type }}
   selector:
     # Hardcoded selector must match Deployment Pod labels
     app: my-app 
   ports:
-    - port: 5000
-      targetPort: 5000
-      nodePort: 31000
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}
+      nodePort: {{ .Values.service.nodePort }}
