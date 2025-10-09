@@ -5,6 +5,6 @@ image:
   pullPolicy: Always
 service:
   type: NodePort
-  port: 80         # container port your app listens on
-  targetPort: 80   # container port mapping
+  port: 5000         # container port your app listens on
+  targetPort: 5000   # container port mapping
   nodePort: 30080  # external port you will hit
