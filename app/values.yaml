@@ -1,7 +1,7 @@
 replicaCount: 2
 image:
   repository: afzie999/my-app
-  tag: 975023f92a89fc8815cd1cfb6c5c1515fdbcb89c
+  tag: 547832b1cbfcf895d81315690c1ffa13410ccfda
   pullPolicy: Always
 service:
   type: NodePort
