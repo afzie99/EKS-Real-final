@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/afzie99/EKS-Real.git', branch: 'main'
+                git url: 'https://github.com/afzie99/EKS-Real-final.git', branch: 'main'
             }
         }
         stage('Build Docker Image') {
@@ -29,7 +29,7 @@ pipeline {
             // 1. Update the values.yaml file
             // NOTE: Check the indentation in your sed command; ' tag:' should likely be two spaces.
             sh '''
-            sed -i "s|^ *tag:.*|  tag: ${GIT_COMMIT}|" helm/my-app-chart/values.yaml
+            sed -i "s|^ *tag:.*|  tag: ${GIT_COMMIT}|" app/values.yaml
             '''
             
             // 2. Configure Git user
@@ -37,7 +37,7 @@ pipeline {
             sh 'git config user.name "jenkins"'
             
             // 3. Commit the change
-            sh 'git add helm/my-app-chart/values.yaml'
+            sh 'git add app/values.yaml'
             sh "git commit -m 'Update image tag to ${GIT_COMMIT}'"
             
             // 4. Authenticated Git Push (FIXED)
@@ -48,7 +48,7 @@ pipeline {
             ]) {
                 // Now, use the token variable in the push URL for authentication
                 // Format: https://<token>@github.com/<repo>
-                sh "git push https://${GH_TOKEN}@github.com/afzie99/EKS-Real.git HEAD:main"
+                sh "git push https://${GH_TOKEN}@github.com/afzie99/EKS-Real-final.git HEAD:main"
             }
         }
     }
