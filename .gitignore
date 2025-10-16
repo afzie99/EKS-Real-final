@@ -1,0 +1,58 @@
+# Terraform generated directories and files
+# ----------------------------------------
+
+# The .terraform directory stores downloaded provider plugins and modules.
+# It should always be ignored as it can be large and is platform-specific.
+**/.terraform/*
+
+# The local state file is highly sensitive as it contains all infrastructure
+# details, including potentially plaintext secrets. Never commit this.
+# Use a remote backend (e.g., S3, Terraform Cloud) for state management.
+*.tfstate
+*.tfstate.*
+
+# Saved plan files created with 'terraform plan -out=tfplan'
+*.tfplan
+
+# Crash log files
+crash.log
+crash.*.log
+
+# Terraform CLI configuration files for local settings
+.terraformrc
+terraform.rc
+
+# Variable definition files
+# -------------------------
+
+# Ignore general .tfvars files as they frequently contain secrets, keys, or
+# environment-specific data that shouldn't be in version control.
+# If you need to commit a non-sensitive example, use a negation (see below).
+*.tfvars
+*.tfvars.json
+*vars.json
+
+**/.idea/*
+.DS_Store
+venv/
+
+*.terraform.lock.hcl
+.vscode/
+.gitmodules
+
+# Override files are typically used for local, temporary configuration changes
+# and should not be committed.
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Optional: Environment-specific files
+# ------------------------------------
+
+# If you use temporary shell scripts or local environment variables:
+# .envrc
+# .env
+
+.$*.drawio.bkp
+.$*.drawio.dtmp
