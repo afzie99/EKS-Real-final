@@ -7,5 +7,3 @@ terraform {
     }
   }
 }
-
-#dummy commit
