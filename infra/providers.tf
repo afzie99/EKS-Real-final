@@ -4,9 +4,9 @@ provider "aws" {
   region     = "us-east-1"
 
   endpoints {
-    ec2 = "http://host.docker.internal:4566"
-    iam = "http://host.docker.internal:4566"
-    s3  = "http://host.docker.internal:4566"
+    ec2 = "http://localstack:4566"
+    iam = "http://localstack:4566"
+    s3  = "http://localstack:4566"
   }
 
   skip_credentials_validation = true
